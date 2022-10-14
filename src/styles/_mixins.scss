@@ -1,0 +1,144 @@
+@use "variables";
+
+@mixin clearfix {
+    &::after {
+        display: block;
+        clear: both;
+        content: "";
+    }
+}
+
+@mixin position ($position, $top, $right, $bottom, $left) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+@mixin absolute ($top, $right, $bottom, $left) {
+    @include position(absolute, $top, $right, $bottom, $left);
+}
+
+@mixin fixed ($top, $right, $bottom, $left) {
+    @include position(fixed, $top, $right, $bottom, $left);
+}
+
+@mixin container {
+    min-width: variables.$container__initial;
+    max-width: variables.$container--max-width;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: variables.$gutter;
+    padding-right: variables.$gutter;
+    width: 100%;
+}
+
+@mixin ui-default-transition ($proptype) {
+    transition: $proptype 460ms cubic-bezier(.7, 0, .3, 1);
+}
+
+@mixin no-display {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+@mixin list-reset {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+@mixin section-title {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+@mixin truncate ($width) {
+    width: $width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin accordion {
+    @include ui-default-transition(max-height);
+    max-height: 0;
+    overflow: hidden;
+
+    &.active {
+        max-height: 120rem;
+        position: relative;
+        margin-bottom: 12px;
+    }
+}
+
+@mixin flex ($direction, $vcenter, $hcenter, $wrap) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: $vcenter;
+    justify-content: $hcenter;
+    flex-wrap: $wrap;
+}
+
+@mixin aspect-ratio-calc ($height, $width) {
+    &::before {
+        content: "";
+        width: 1px;
+        margin-left: -1px;
+        float: left;
+        height: 0;
+        padding-bottom: calc(($height / $width) * 100%);
+    }
+
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin placeholder ($color) {
+    ::-webkit-input-placeholder {
+        color: $color;
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+        color: $color;
+    }
+
+    ::-moz-placeholder { /* Firefox 19+ */
+        color: $color;
+    }
+
+    :-ms-input-placeholder {
+        color: $color;
+    }
+}
+
+@mixin section-no-gutters {
+    position: relative;
+    margin-left: calc(-1 * variables.$gutter);
+    margin-right: calc(-1 * variables.$gutter);
+}
+
+@mixin table-caption-reset {
+    background: transparent;
+    font-weight: normal;
+    text-transform: none;
+    width: auto;
+    text-align: left;
+    color: variables.$color__text;
+}
+
+
+@function toRem($value) {
+    $remValue: calc($value / variables.$base-font-size) + rem; 
+    @return $remValue;
+}

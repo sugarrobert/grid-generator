@@ -1,0 +1,9 @@
+@use "variables";
+@use "mixins";
+@use "buttons";
+
+body {
+    margin: 0;
+    background-color: variables.$theme-background-color__primary;
+    color: var(--text);
+}
