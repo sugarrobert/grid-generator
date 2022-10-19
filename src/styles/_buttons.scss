@@ -1,0 +1,39 @@
+@use "variables";
+@use "mixins";
+
+.action {
+    font: inherit;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    border: none;
+    background-color: transparent;
+
+    &.primary {
+        padding: mixins.toRem(5) mixins.toRem(10);
+        font-size: mixins.toRem(16);
+        line-height: mixins.toRem(19);
+        color: variables.$white;
+        background-color: variables.$theme-color__primary-10;
+        font-weight: 600;
+    }
+
+    &.add {
+        padding: mixins.toRem(5) mixins.toRem(10);
+        font-size: mixins.toRem(16);
+        line-height: mixins.toRem(19);
+        color: variables.$white;
+        background-color: variables.$green;
+        font-weight: 600;
+    }
+
+    &.remove {
+        padding: mixins.toRem(5) mixins.toRem(10);
+        font-size: mixins.toRem(16);
+        line-height: mixins.toRem(19);
+        color: variables.$white;
+        background-color: variables.$red;
+        font-weight: 600;
+    }
+}
+

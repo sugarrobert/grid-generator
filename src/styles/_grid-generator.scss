@@ -7,3 +7,58 @@ body {
     background-color: variables.$theme-background-color__primary;
     color: var(--text);
 }
+
+.control-field__section {
+    padding: mixins.toRem(20);
+    border-bottom: 1px solid variables.$grey-50;
+}
+
+.control-field__title {
+    font-size: mixins.toRem(21);
+    line-height: mixins.toRem(24);
+    margin-bottom: mixins.toRem(20);
+}
+
+.control-field__description {
+    font-size: mixins.toRem(14);
+    line-height: mixins.toRem(21);
+    margin-bottom: mixins.toRem(20);
+}
+
+.controls__container {
+    display: flex;
+    gap: 10px;
+}
+
+.controls__list__container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: mixins.toRem(15);
+}
+
+.controls__list__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-field__current-value__label {
+    font-size: mixins.toRem(14);
+    line-height: mixins.toRem(21);
+    margin-bottom: mixins.toRem(5);
+}
+
+.grid__list {
+    display: grid;
+    padding: mixins.toRem(10);
+}
+
+.grid__item {
+    @include mixins.flex(row, center,  center, nowrap);
+    background: #3273dc;
+    color: #fff;
+    padding: mixins.toRem(20);;
+    font-size: mixins.toRem(21);;
+    border-radius: mixins.toRem(5);;
+}
