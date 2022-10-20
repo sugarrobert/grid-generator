@@ -8,6 +8,12 @@ function App() {
     const [templateColumnsList, setTemplateColumnsList] = useState([]);
     const [templateColumns, setTemplateColumns] = useState(3);
     const [templateRows, setTemplateRows] = useState([]);
+    const [gridListStyle, setGridListStyle] = useState({
+        gridTemplateColumns: "1fr 1fr 1fr", 
+        gridTemplateRows: "auto", 
+        gap: "20px", 
+        placeItems: "stretch"
+    });
     
     useEffect(() => {
         setGridList([]);
@@ -34,15 +40,19 @@ function App() {
         let count = 1;
 
         for (let i = 0; i < templateColumns; i++) {
+            const id = nanoid();
+
             const item = {
-                id: nanoid(),
+                id: id,
                 name: `Column ${count}`,
                 input: {
                     id: nanoid(),
+                    dataId: id,
                     value: "1",
                 },
                 options: {
                     id: nanoid(),
+                    dataId: id,
                     selected: "fr",
                     option: ["fr", "px", "%", "auto"]
                 }
@@ -57,33 +67,61 @@ function App() {
         }
     }, [templateColumns])
 
-    let gridListStyle = {
-        gridTemplateColumns: "1fr 1fr 1fr", 
-        gridTemplateRows: "auto", 
-        gap: "20px", 
-        placeItems: "stretch"
-    };
-
     const addElement = () => {
-        setGridItem(gridItems + 1)
+        setGridItems(gridItems + 1)
     }
     
     const removeElement = () => {
-        setGridItem(gridItems - 1)
+        setGridItems(gridItems - 1)
     }
 
     const onValueChange = (event) => {
         const parent = event.target.parentElement.id;
+        const elementName = event.target.nodeName;
         const { value } = event.target
         
         const updateValue = templateColumnsList.map(columnListItem => {
-            if (parent === columnListItem.id) {
-                columnListItem.input.value = value;
+            if (elementName === "INPUT") {
+                if (parent === columnListItem.id) {
+                    columnListItem.input.value = value;
+                }
+            } else if (elementName === "SELECT") {
+                if (parent === columnListItem.id) {
+                    columnListItem.options.selected = value;
+                }
             }
+
             return columnListItem;
         })
 
         setTemplateColumnsList(updateValue);
+        updateListStyle();
+    }
+
+    const updateListStyle = () => {
+        const columnStyle = templateColumnsList.map(style => {
+            const input = style.input.value;
+            const option = style.options.selected;
+            let newValue;
+
+            if (option !== "auto") {
+                newValue = input + option;
+            } else {
+                newValue = option;
+            }
+            
+
+            return newValue;
+        })
+
+        const newColumnStyle = columnStyle.join(" ");
+
+        setGridListStyle(prevStyle => ({
+            ...prevStyle,
+            gridTemplateColumns: newColumnStyle
+        }));
+
+        console.log(gridListStyle)
     }
 
     const setAllGridItems = gridList.map(gridItem => (
