@@ -4,7 +4,7 @@ import {nanoid} from "nanoid";
 
 function App() {
     const [gridList, setGridList] = useState([]);
-    const [gridItems, setGridItems] = useState(3);
+    const [gridItems, setGridItems] = useState(9);
     const [templateColumnsList, setTemplateColumnsList] = useState([]);
     const [templateColumns, setTemplateColumns] = useState(3);
     const [templateRows, setTemplateRows] = useState([]);
@@ -14,19 +14,15 @@ function App() {
         gap: "20px", 
         placeItems: "stretch"
     });
-    
+
     useEffect(() => {
         setGridList([]);
-        let count = 1;
 
         for (let i = 0; i < gridItems; i++) {
             const item = {
-                id: count,
-                number: count,
+                id: nanoid(),
                 class: "grid__item"
             }
-
-            count++;
 
             setGridList(prevGridList => ([
                 ...prevGridList,
@@ -35,40 +31,47 @@ function App() {
         }
     }, [gridItems])
 
-    useEffect(() => {
-        setTemplateColumnsList([]);
-        let count = 1;
+    useEffect(() => {    
+        if (templateColumnsList.length === 0) {
+            setTemplateColumnsList([]);
 
-        for (let i = 0; i < templateColumns; i++) {
-            const id = nanoid();
-
-            const item = {
-                id: id,
-                name: `Column ${count}`,
-                input: {
-                    id: nanoid(),
-                    dataId: id,
-                    value: "1",
-                },
-                options: {
-                    id: nanoid(),
-                    dataId: id,
-                    selected: "fr",
-                    option: ["fr", "px", "%", "auto"]
-                }
+            for (let i = 0; i < templateColumns; i++) {
+                const newItem = createNewTemplateItem(); 
+    
+                setTemplateColumnsList(prevColumnList => ([
+                    ...prevColumnList,
+                    newItem
+                ]));
             }
-
-            count++;
-
-            setTemplateColumnsList(prevColumnList => ([
-                ...prevColumnList,
-                item
-            ]));
         }
+        
     }, [templateColumns])
 
+    useEffect(() => {
+        updateListStyle();
+    }, [templateColumnsList])
+
+    const createNewTemplateItem = () => {
+        const id = nanoid();
+    
+        return {
+            id: id,
+            input: {
+                id: nanoid(),
+                dataId: id,
+                value: "1",
+            },
+            options: {
+                id: nanoid(),
+                dataId: id,
+                selected: "fr",
+                option: ["fr", "px", "%", "auto"]
+            }
+        }
+    }
+
     const addElement = () => {
-        setGridItems(gridItems + 1)
+        setGridItems(gridItems + 1);
     }
     
     const removeElement = () => {
@@ -95,7 +98,6 @@ function App() {
         })
 
         setTemplateColumnsList(updateValue);
-        updateListStyle();
     }
 
     const updateListStyle = () => {
@@ -110,7 +112,6 @@ function App() {
                 newValue = option;
             }
             
-
             return newValue;
         })
 
@@ -120,28 +121,48 @@ function App() {
             ...prevStyle,
             gridTemplateColumns: newColumnStyle
         }));
-
-        console.log(gridListStyle)
     }
 
-    const setAllGridItems = gridList.map(gridItem => (
+    const updateGridTemplate = () => {
+        setTemplateColumns(templateColumns + 1);
+        const newItem = createNewTemplateItem();
+
+        setTemplateColumnsList(prevColumnList => ([
+            ...prevColumnList,
+            newItem
+        ]));
+    }
+    
+    const deleteGridTemplate = (e) => {
+        const btnId = e.target.dataset.id;
+
+        const newColumnList = templateColumnsList.filter(listItem => {
+            setTemplateColumns(templateColumns - 1);
+            return listItem.id !== btnId;
+        })
+
+        setTemplateColumnsList(newColumnList);
+    }
+
+    const setAllGridItems = gridList.map((gridItem, index) => (
         <li 
             key={gridItem.id}
             id={gridItem.id}
             className={gridItem.class}
-        >{gridItem.number}</li>
+        >{index + 1}</li>
         )
     )
 
-    const setAllColumnsItems = templateColumnsList.map(columnItem => (
+    const setAllColumnsItems = templateColumnsList.map((columnItem, index) => (
         <ControlsListItem 
             key={columnItem.id}
             id={columnItem.id}
-            name={columnItem.name}
+            index={index}
             value={columnItem.value}
             input={columnItem.input}
             options={columnItem.options}
             onValueChange={onValueChange}
+            deleteGridTemplate={deleteGridTemplate}
         />
         )
     )
@@ -161,13 +182,13 @@ function App() {
                 <p className="control-field__description">grid-template-columns defines how the elements will be divided into <strong>vertical columns</strong> and how they will be sized in relation to each other.</p>
                 <div className="controls__list__container">
                     {setAllColumnsItems}
-                    <button className="action primary">
+                    <button className="action primary" onClick={updateGridTemplate}>
                         <span>+ Add another column</span>
                     </button>
                 </div>
                 <div className="control-field__current-value">
                     <p className="control-field__current-value__label">Current Value:</p>
-                    <code>grid-template-columns: 1fr 200px 1fr</code>
+                    <code>grid-template-columns: {gridListStyle.gridTemplateColumns}</code>
                 </div>
             </section>
             <section className="control-field__section">
