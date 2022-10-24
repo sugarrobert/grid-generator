@@ -5,8 +5,8 @@ function ControlsListItem(props) {
     return (
         <div className="controls__list__item" id={props.id}>
             <span className="control__text">
-                {`Column ${props.index + 1}`}
-                </span>
+                {`${props.name} ${props.index + 1}`}
+            </span>
             <label htmlFor={props.input.id} className="no-display">{`Grid Template ${props.name} amount`}</label>
             <input id={props.input.id}
                 placeholder="1" 
