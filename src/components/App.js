@@ -1,19 +1,46 @@
 import React, { useState, useEffect } from "react";
 import ControlsListItem from "./ControlsListItem";
+import ControlsGridGutters from "./ControlsGridGutters";
 import {nanoid} from "nanoid";
 
 function App() {
-    const [gridList, setGridList] = useState([]);
     const [gridItems, setGridItems] = useState(9);
+    const [gridList, setGridList] = useState([]);
     const [templateColumns, setTemplateColumns] = useState(3);
     const [templateColumnsList, setTemplateColumnsList] = useState([]);
     const [templateRows, setTemplateRows] = useState(2);
     const [templateRowsList, setTemplateRowsList] = useState([]);
+    const [gridRowGap, setGridRowGap] = useState({
+        id: nanoid(),
+        input: {
+            id: nanoid(),
+            value: "20",
+        },
+        options: {
+            id: nanoid(),
+            selected: "px",
+            option: ["px", "%"]
+        }
+    });
+    const [gridColumnGap, setGridColumnGap] = useState({
+        id: nanoid(),
+        input: {
+            id: nanoid(),
+            value: "20",
+        },
+        options: {
+            id: nanoid(),
+            selected: "px",
+            option: ["px", "%"]
+        }
+    });
     const [gridListStyle, setGridListStyle] = useState({
         gridTemplateColumns: "1fr 1fr 1fr", 
         gridTemplateRows: "1fr 1fr", 
-        gap: "20px", 
-        placeItems: "stretch"
+        gridColumnGap: "20px",
+        gridRowGap: "20px",
+        justifyItems: "stretch",
+        alignItems: "center"
     });
 
     useEffect(() => {
@@ -62,9 +89,14 @@ function App() {
     }, [templateColumns, templateRows])
 
     useEffect(() => {
-        updateListStyle(templateColumnsList, "gridTemplateColumns");
-        updateListStyle(templateRowsList, "gridTemplateRows");
+        updateGridTemplateStyle(templateColumnsList, "gridTemplateColumns");
+        updateGridTemplateStyle(templateRowsList, "gridTemplateRows");
     }, [templateColumnsList, templateRowsList])
+
+    useEffect(() => {
+        updateGridGuttersStyle(gridRowGap, "gridRowGap");
+        updateGridGuttersStyle(gridColumnGap, "gridColumnGap");
+    }, [gridRowGap, gridColumnGap])
 
     const createNewTemplateItem = () => {
         const id = nanoid();
@@ -123,8 +155,27 @@ function App() {
         onValueChange(e, templateRowsList, setTemplateRowsList)
     }
 
-    const updateListStyle = (templateList, updateStyle) => {
-        const columnStyle = templateList.map(style => {
+    const onGutterValueChange = (e, gridGutter, setGridGutter) => {
+        const elementName = e.target.nodeName;
+        const { value } = e.target;
+        
+        if (elementName === "INPUT") {
+            setGridGutter(prevGutter => {
+                const newInput = {...prevGutter};
+                newInput.input.value = value;
+                return newInput;
+            });
+        } else if (elementName === "SELECT") {
+            setGridGutter(prevGutter => {
+                const newSelected = {...prevGutter};
+                newSelected.options.selected = value;
+                return newSelected;
+            });
+        }
+    }
+
+    const updateGridTemplateStyle = (templateList, updateStyle) => {
+        const templateStyle = templateList.map(style => {
             const input = style.input.value;
             const option = style.options.selected;
             let newValue;
@@ -138,12 +189,32 @@ function App() {
             return newValue;
         })
 
-        const newStyle = columnStyle.join(" ");
+        const newStyle = templateStyle.join(" ");
 
         setGridListStyle(prevStyle => ({
             ...prevStyle,
             [updateStyle]: newStyle
         }));
+    }
+
+    const updateGridGuttersStyle = (templateGutter, updateStyle) => {
+        const input = templateGutter.input.value;
+        const option = templateGutter.options.selected;
+        const newValue = input + option;
+
+        setGridListStyle(prevGutter => {
+            const newGutter = {...prevGutter};
+            newGutter[updateStyle] = newValue;
+            return newGutter;
+        });
+    }
+
+    const setNewRowGutter = (e) => {
+        onGutterValueChange(e, gridRowGap, setGridRowGap);
+    }
+    
+    const setNewColumnGutter = (e) => {
+        onGutterValueChange(e, gridColumnGap, setGridColumnGap);
     }
 
     const updateGridTemplate = (templateNum, setTemplateNum, setTemplateList) => {
@@ -224,70 +295,95 @@ function App() {
 
     return (
         <>
-            <h1>Grid Generator</h1>
-            <section className="control-field__section">
-                <h2 className="control-field__title">Add or Remove elements within the grid</h2>
-                <div className="controls__container">
-                    <button className="action add" onClick={addElement}>+</button>
-                    <button className="action remove" onClick={removeElement}>-</button>
+            <header>
+                <h1>Grid Generator</h1>
+            </header>
+            <main>
+                <div className="control-field__container">
+                    <section className="control-field__section">
+                        <h2 className="control-field__title">Add or Remove elements within the grid</h2>
+                        <div className="controls__container">
+                            <button className="action add" onClick={addElement}>+</button>
+                            <button className="action remove" onClick={removeElement}>-</button>
+                        </div>
+                    </section>
+                    <section className="control-field__section">
+                        <h2 className="control-field__title">Grid Template Columns</h2>
+                        <p className="control-field__description">grid-template-columns defines how the elements will be divided into <strong>vertical columns</strong> and how they will be sized in relation to each other.</p>
+                        <div className="controls__list__container">
+                            {setAllColumnsItems}
+                            <button className="action primary" onClick={updateGridColumnTemplate}>
+                                <span>+ Add another column</span>
+                            </button>
+                        </div>
+                        <div className="control-field__current-value">
+                            <p className="control-field__current-value__label">Current Value:</p>
+                            <code>grid-template-columns: {gridListStyle.gridTemplateColumns}</code>
+                        </div>
+                    </section>
+                    <section className="control-field__section">
+                        <h2 className="control-field__title">Grid Template Rows</h2>
+                        <p className="control-field__description">grid-template-columns defines how the elements will be divided into <strong>vertical columns</strong> and how they will be sized in relation to each other.</p>
+                        <div className="controls__list__container">
+                            {setAllRowsItems}
+                            <button className="action primary" onClick={updateGridRowTemplate}>
+                                <span>+ Add another row</span>
+                            </button>
+                        </div>
+                        <div className="control-field__current-value">
+                            <p className="control-field__current-value__label">Current Value:</p>
+                            <code>grid-template-rows: {gridListStyle.gridTemplateRows}</code>
+                        </div>
+                    </section>
+                    <section className="control-field__section">
+                        <h2 className="control-field__title">Grid Row Gap</h2>
+                        <p className="control-field__description">Defines the horizontal space <strong>between</strong> all rows.</p>
+                        <div className="controls__container">
+                        <ControlsGridGutters 
+                            key={gridRowGap.id}
+                            id={gridRowGap.id}
+                            value={gridRowGap.value}
+                            input={gridRowGap.input}
+                            options={gridRowGap.options}
+                            onValueChange={setNewRowGutter}
+                        />
+                        </div>
+                    </section>
+                    <section className="control-field__section">
+                        <h2 className="control-field__title">Grid Column Gap</h2>
+                        <p className="control-field__description">Defines the horizontal space <strong>between</strong> all columns.</p>
+                        <div className="controls__container">
+                        <ControlsGridGutters 
+                            key={gridColumnGap.id}
+                            id={gridColumnGap.id}
+                            value={gridColumnGap.value}
+                            input={gridColumnGap.input}
+                            options={gridColumnGap.options}
+                            onValueChange={setNewColumnGutter}
+                        />
+                        </div>
+                    </section>
                 </div>
-            </section>
-            <section className="control-field__section">
-                <h2 className="control-field__title">Grid Template Columns</h2>
-                <p className="control-field__description">grid-template-columns defines how the elements will be divided into <strong>vertical columns</strong> and how they will be sized in relation to each other.</p>
-                <div className="controls__list__container">
-                    {setAllColumnsItems}
-                    <button className="action primary" onClick={updateGridColumnTemplate}>
-                        <span>+ Add another column</span>
-                    </button>
+                <div className="result__preview__container">
+                    <section className="preview result__preview">
+                        <ul className="grid__list" id="grid__list" 
+                            style={gridListStyle}>
+                            {setAllGridItems}
+                        </ul>
+                    </section>
+                    <section className="result-code">
+                        <code className="code__lang"> 
+                            display: grid;
+                            grid-template-columns: 1fr 200px 1fr;<br/>
+                            grid-template-rows: 2fr 100px;<br/>
+                            grid-column-gap: 20px;<br/>
+                            grid-row-gap: 20px;<br/>
+                            justify-items: stretch;<br/>
+                            align-items: stretch;
+                        </code>
+                    </section>
                 </div>
-                <div className="control-field__current-value">
-                    <p className="control-field__current-value__label">Current Value:</p>
-                    <code>grid-template-columns: {gridListStyle.gridTemplateColumns}</code>
-                </div>
-            </section>
-            <section className="control-field__section">
-                <h2 className="control-field__title">Grid Template Rows</h2>
-                <p className="control-field__description">grid-template-columns defines how the elements will be divided into <strong>vertical columns</strong> and how they will be sized in relation to each other.</p>
-                <div className="controls__list__container">
-                    {setAllRowsItems}
-                    <button className="action primary" onClick={updateGridRowTemplate}>
-                        <span>+ Add another row</span>
-                    </button>
-                </div>
-                <div className="control-field__current-value">
-                    <p className="control-field__current-value__label">Current Value:</p>
-                    <code>grid-template-columns: {gridListStyle.gridTemplateRows}</code>
-                </div>
-            </section>
-            <section className="control-field__section">
-                <h2 className="control-field__title">Grid Column Gap</h2>
-                <p className="control-field__description">Defines the horizontal space <strong>between</strong> all columns.</p>
-                <div className="controls__container">
-                    <input placeholder="10" type="number" min="0" className="input"/>
-                    <select>
-                        <option val="px">px</option>
-                        <option val="%">%</option>
-                    </select>
-                </div>
-            </section>
-            <section className="preview result__preview">
-                <ul className="grid__list" id="grid__list" 
-                    style={gridListStyle}>
-                    {setAllGridItems}
-                </ul>
-            </section>
-            <section className="result-code">
-                <code className="code__lang"> 
-                    display: grid;
-                    grid-template-columns: 1fr 200px 1fr;
-                    grid-template-rows: 2fr 100px;
-                    grid-column-gap: 20px
-                    grid-row-gap: 20px
-                    justify-items: stretch
-                    align-items: stretch
-                </code>
-            </section>
+            </main>
         </>
     );
 }

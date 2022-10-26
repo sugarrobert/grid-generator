@@ -8,9 +8,32 @@ body {
     color: var(--text);
 }
 
+main {
+    @media (min-width: 1024px) {
+        display: grid;
+        grid-template-columns: 2.5fr 3fr;
+        gap: mixins.toRem(20);
+    }
+}
+
+.control-field__container {
+    @media (min-width: 1024px) {
+        grid-column: 1 / 2;
+    }
+}
+
+.result__preview__container {
+    @media (min-width: 1024px) {
+        display: grid;
+        align-items: center;
+        grid-column: 2 / 3;
+    }
+}
+
 .control-field__section {
     padding: mixins.toRem(20);
     border-bottom: 1px solid variables.$grey-50;
+    max-width: mixins.toRem(500);
 }
 
 .control-field__title {
@@ -58,7 +81,7 @@ body {
     @include mixins.flex(row, center,  center, nowrap);
     background: #3273dc;
     color: #fff;
-    padding: mixins.toRem(20);;
-    font-size: mixins.toRem(21);;
-    border-radius: mixins.toRem(5);;
+    padding: mixins.toRem(20);
+    font-size: mixins.toRem(21);
+    border-radius: mixins.toRem(5);
 }
