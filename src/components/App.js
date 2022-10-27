@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ControlsListItem from "./ControlsListItem";
 import ControlsGridGutters from "./ControlsGridGutters";
+import ControlsGridAlignment from "./ControlsGridAlignment";
 import {nanoid} from "nanoid";
 
 function App() {
@@ -32,6 +33,22 @@ function App() {
             id: nanoid(),
             selected: "px",
             option: ["px", "%"]
+        }
+    });
+    const [gridJustify, setGridJustify] = useState({
+        id: nanoid(),
+        options: {
+            id: nanoid(),
+            selected: "stretch",
+            option: ["stretch", "center", "start", "end"]
+        }
+    });
+    const [gridAlign, setGridAlign] = useState({
+        id: nanoid(),
+        options: {
+            id: nanoid(),
+            selected: "stretch",
+            option: ["stretch", "center", "start", "end"]
         }
     });
     const [gridListStyle, setGridListStyle] = useState({
@@ -97,6 +114,11 @@ function App() {
         updateGridGuttersStyle(gridRowGap, "gridRowGap");
         updateGridGuttersStyle(gridColumnGap, "gridColumnGap");
     }, [gridRowGap, gridColumnGap])
+    
+    useEffect(() => {
+        updateGridAlignment(gridJustify, "justifyItems");
+        updateGridAlignment(gridAlign, "alignItems");
+    }, [gridJustify, gridAlign])
 
     const createNewTemplateItem = () => {
         const id = nanoid();
@@ -215,6 +237,34 @@ function App() {
     
     const setNewColumnGutter = (e) => {
         onGutterValueChange(e, gridColumnGap, setGridColumnGap);
+    }
+
+    const onAlignmentValueChange = (e, gridAlignment, setGridAlignment) => {
+        const { value } = e.target;
+        
+        setGridAlignment(prevAlignment => {
+            const newSelected = {...prevAlignment};
+            newSelected.options.selected = value;
+            return newSelected;
+        });
+    }
+
+    const updateGridAlignment = (templateAlignment, updateStyle) => {
+        const option = templateAlignment.options.selected;
+
+        setGridListStyle(prevAlignment => {
+            const newAlignment = {...prevAlignment};
+            newAlignment[updateStyle] = option;
+            return newAlignment;
+        });
+    }
+
+    const setNewJustifyAlignment = (e) => {
+        onAlignmentValueChange(e, gridJustify, setGridJustify);
+    }
+
+    const setNewAlignAlignment = (e) => {
+        onAlignmentValueChange(e, gridAlign, setGridAlign);
     }
 
     const updateGridTemplate = (templateNum, setTemplateNum, setTemplateList) => {
@@ -360,6 +410,30 @@ function App() {
                             input={gridColumnGap.input}
                             options={gridColumnGap.options}
                             onValueChange={setNewColumnGutter}
+                        />
+                        </div>
+                    </section>
+                    <section className="control-field__section">
+                        <h2 className="control-field__title">Justify Items</h2>
+                        <p className="control-field__description">Defines how the items will be aligned <strong>horizontally</strong> in each column.</p>
+                        <div className="controls__container">
+                        <ControlsGridAlignment 
+                            key={gridJustify.id}
+                            id={gridJustify.id}
+                            options={gridJustify.options}
+                            onValueChange={setNewJustifyAlignment}
+                        />
+                        </div>
+                    </section>
+                    <section className="control-field__section">
+                        <h2 className="control-field__title">Align Items</h2>
+                        <p className="control-field__description">Defines how the items will be aligned <strong>vertically</strong> in each column.</p>
+                        <div className="controls__container">
+                        <ControlsGridAlignment 
+                            key={gridAlign.id}
+                            id={gridAlign.id}
+                            options={gridAlign.options}
+                            onValueChange={setNewAlignAlignment}
                         />
                         </div>
                     </section>
