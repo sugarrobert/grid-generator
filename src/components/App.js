@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ControlsListItem from "./ControlsListItem";
 import ControlsGridGutters from "./ControlsGridGutters";
 import ControlsGridAlignment from "./ControlsGridAlignment";
+import GridItem from "./GridItem";
 import {nanoid} from "nanoid";
 
 function App() {
@@ -140,11 +141,15 @@ function App() {
     }
 
     const addElement = () => {
-        setGridItems(gridItems + 1);
+        setGridItems(currentItems => {
+            return currentItems + 1;
+        });
     }
     
     const removeElement = () => {
-        setGridItems(gridItems - 1)
+        setGridItems(currentItems => {
+            return currentItems - 1;
+        });
     }
 
     const onValueChange = (e, templateList, setTemplateList) => {
@@ -267,8 +272,11 @@ function App() {
         onAlignmentValueChange(e, gridAlign, setGridAlign);
     }
 
-    const updateGridTemplate = (templateNum, setTemplateNum, setTemplateList) => {
-        setTemplateNum(templateNum + 1);
+    const updateGridTemplate = (setTemplateNum, setTemplateList) => {
+        setTemplateNum(currentTemplateNum => {
+            return currentTemplateNum + 1
+        });
+        
         const newItem = createNewTemplateItem();
 
         setTemplateList(prevList => ([
@@ -278,18 +286,21 @@ function App() {
     }
     
     const updateGridColumnTemplate = () => {
-        updateGridTemplate(templateColumns, setTemplateColumns, setTemplateColumnsList);
+        updateGridTemplate(setTemplateColumns, setTemplateColumnsList);
     }
     
     const updateGridRowTemplate = () => {
-        updateGridTemplate(templateRows, setTemplateRows, setTemplateRowsList);
+        updateGridTemplate(setTemplateRows, setTemplateRowsList);
     }
     
-    const deleteGridTemplate = (e, templateNum, setTemplateNum, templateList, setTemplateList) => {
+    const deleteGridTemplate = (e, setTemplateNum, templateList, setTemplateList) => {
         const btnId = e.target.dataset.id;
 
+        setTemplateNum(currentTemplateNum => {
+            return currentTemplateNum - 1
+        });
+
         const newColumnList = templateList.filter(listItem => {
-            setTemplateNum(templateNum - 1);
             return listItem.id !== btnId;
         })
 
@@ -297,19 +308,20 @@ function App() {
     }
 
     const deleteGridColumn = (e) => {
-        deleteGridTemplate(e, templateColumns, setTemplateColumns, templateColumnsList, setTemplateColumnsList)
+        deleteGridTemplate(e, setTemplateColumns, templateColumnsList, setTemplateColumnsList)
     }
     
     const deleteGridRow = (e) => {
-        deleteGridTemplate(e, templateRows, setTemplateRows, templateRowsList, setTemplateRowsList)
+        deleteGridTemplate(e, setTemplateRows, templateRowsList, setTemplateRowsList)
     }
 
     const setAllGridItems = gridList.map((gridItem, index) => (
-        <li 
+        <GridItem
             key={gridItem.id}
             id={gridItem.id}
-            className={gridItem.class}
-        >{index + 1}</li>
+            index={index}
+            class={gridItem.class}
+        />
         )
     )
 
@@ -373,7 +385,7 @@ function App() {
                     </section>
                     <section className="control-field__section">
                         <h2 className="control-field__title">Grid Template Rows</h2>
-                        <p className="control-field__description">grid-template-columns defines how the elements will be divided into <strong>vertical columns</strong> and how they will be sized in relation to each other.</p>
+                        <p className="control-field__description">grid-template-rows defines how the elements will be divided into <strong>horizontal rows</strong> and how they will be sized in relation to each other.</p>
                         <div className="controls__list__container">
                             {setAllRowsItems}
                             <button className="action primary" onClick={updateGridRowTemplate}>
