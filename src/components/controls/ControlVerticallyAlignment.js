@@ -1,10 +1,10 @@
 import React from 'react';
 import { useContext } from 'react';
-import GridTemplateContext from '../../context/GridTemplateContext';
+import GridContext from '../../context/GridContext';
 import GridAlignment from '../GridAlignment';
 
 function ControlVerticallyAlignment() {
-    const { gridAlign, setNewAlignAlignment } = useContext(GridTemplateContext);
+    const { gridAlign, setNewAlignAlignment } = useContext(GridContext);
 
     return (
         <section className="control-field__section">

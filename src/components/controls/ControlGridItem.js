@@ -1,9 +1,9 @@
 import React from 'react';
 import { useContext } from 'react';
-import GridTemplateContext from '../../context/GridTemplateContext';
+import GridContext from '../../context/GridContext';
 
 function ControlGridItem() {
-    const { addElement, removeElement } = useContext(GridTemplateContext);
+    const { addElement, removeElement } = useContext(GridContext);
 
     return (
         <section className="control-field__section">

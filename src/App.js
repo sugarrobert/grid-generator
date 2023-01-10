@@ -8,7 +8,7 @@ import ControlColumnGap from './components/controls/ControlColumnGap';
 import ControlRowGap from './components/controls/ControlRowGap';
 import ControlJustifyAlignment from './components/controls/ControlJustifyAlignment';
 import ControlVerticallyAlignment from './components/controls/ControlVerticallyAlignment';
-import { GridTemplateProvider } from './context/GridTemplateContext';
+import { GridTemplateProvider } from './context/GridContext';
 
 function App() {
     return (

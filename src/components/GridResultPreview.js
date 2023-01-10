@@ -1,9 +1,9 @@
 import React from 'react';
 import { useContext } from 'react';
-import GridTemplateContext from '../context/GridTemplateContext';
+import GridContext from '../context/GridContext';
 
 function GridItem() {
-    const { gridList, gridListStyle } = useContext(GridTemplateContext);
+    const { gridList, gridListStyle } = useContext(GridContext);
 
     const setAllGridItems = gridList.map((gridItem, index) => (
         <li key={gridItem.id} id={gridItem.id} className={gridItem.class}>

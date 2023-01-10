@@ -1,11 +1,10 @@
 import React from 'react';
 import { useContext } from 'react';
-import GridTemplateContext from '../../context/GridTemplateContext';
+import GridContext from '../../context/GridContext';
 import GridGutters from '../GridGutters';
 
 function ControlColumnGap() {
-    const { gridColumnGap, setNewColumnGutter } =
-        useContext(GridTemplateContext);
+    const { gridColumnGap, setNewColumnGutter } = useContext(GridContext);
 
     return (
         <section className="control-field__section">

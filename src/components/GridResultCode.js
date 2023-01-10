@@ -1,9 +1,9 @@
 import React from 'react';
 import { useContext } from 'react';
-import GridTemplateContext from '../context/GridTemplateContext';
+import GridContext from '../context/GridContext';
 
 function GridResultCode() {
-    const { gridListStyle } = useContext(GridTemplateContext);
+    const { gridListStyle } = useContext(GridContext);
 
     const copyCode = async () => {
         const text = document.querySelector('.code__lang').innerHTML;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import GridTemplateContext from '../../context/GridTemplateContext';
+import GridContext from '../../context/GridContext';
 import ListItem from '../ListItem';
 
 function ControlRowItem() {
@@ -10,7 +10,7 @@ function ControlRowItem() {
         gridListStyle,
         onRowsValueChange,
         deleteGridRow,
-    } = useContext(GridTemplateContext);
+    } = useContext(GridContext);
 
     const setAllRowsItems = templateRowsList.map((rowItem, index) => (
         <ListItem
