@@ -6,19 +6,6 @@ import { updateGridTemplateStyle } from '../context/GridActions';
 function GridResultCode() {
     const { gridListStyle } = useContext(GridContext);
 
-    // useEffect(() => {
-    //     updateGridTemplateStyle(
-    //         state.templateColumnsList,
-    //         'gridTemplateColumns',
-    //         setGridListStyle
-    //     );
-    //     updateGridTemplateStyle(
-    //         state.templateRowsList,
-    //         'gridTemplateRows',
-    //         setGridListStyle
-    //     );
-    // }, [state.templateColumnsList, state.templateRowsList]);
-
     const copyCode = async () => {
         const text = document.querySelector('.code__lang').innerHTML;
 
