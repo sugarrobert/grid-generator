@@ -3,7 +3,15 @@ import { useContext } from 'react';
 import GridContext from '../../context/GridContext';
 
 function ControlGridItem() {
-    const { addElement, removeElement } = useContext(GridContext);
+    const { gridItems, dispatch } = useContext(GridContext);
+
+    const addElement = () => {
+        dispatch({ type: 'SET_GRID_ITEMS', payload: gridItems + 1 });
+    };
+
+    const removeElement = () => {
+        dispatch({ type: 'SET_GRID_ITEMS', payload: gridItems - 1 });
+    };
 
     return (
         <section className="control-field__section">

@@ -1,10 +1,32 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import GridContext from '../../context/GridContext';
 import GridGutters from '../GridGutters';
+import {
+    updateGridGuttersStyle,
+    onGutterValueChange,
+} from '../../context/GridActions';
 
 function ControlRowGap() {
-    const { gridRowGap, setNewRowGutter } = useContext(GridContext);
+    const { gridRowGap, gridListStyle, dispatch } = useContext(GridContext);
+
+    useEffect(() => {
+        dispatch({
+            type: 'SET_GRID_LIST_STYLE',
+            payload: updateGridGuttersStyle(
+                gridRowGap,
+                'gridRowGap',
+                gridListStyle
+            ),
+        });
+    }, [gridRowGap]);
+
+    const setNewRowGutter = (e) => {
+        dispatch({
+            type: 'SET_GRID_ROW_GAP',
+            payload: onGutterValueChange(e, gridRowGap),
+        });
+    };
 
     return (
         <section className="control-field__section">

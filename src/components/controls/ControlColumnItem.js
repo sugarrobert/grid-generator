@@ -1,16 +1,78 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import GridContext from '../../context/GridContext';
 import ListItem from '../ListItem';
+import {
+    createNewTemplateItem,
+    updateGridTemplate,
+    deleteGridTemplate,
+    onValueChange,
+    updateGridTemplateStyle,
+} from '../../context/GridActions';
 
-function ControlRowItem() {
-    const {
-        templateColumnsList,
-        updateGridColumnTemplate,
-        gridListStyle,
-        onColumnValueChange,
-        deleteGridColumn,
-    } = useContext(GridContext);
+function ControlColumnItem() {
+    const { templateColumns, templateColumnsList, gridListStyle, dispatch } =
+        useContext(GridContext);
+
+    useEffect(() => {
+        const newArray = [];
+        if (templateColumnsList.length === 0) {
+            for (let i = 0; i < templateColumns; i++) {
+                const newItem = createNewTemplateItem();
+                newArray.push(newItem);
+            }
+            dispatch({ type: 'SET_GRID_COLUMNS_ITEMS', payload: newArray });
+        }
+
+        dispatch({
+            type: 'SET_GRID_LIST_STYLE',
+            payload: updateGridTemplateStyle(
+                templateColumnsList,
+                'gridTemplateColumns',
+                gridListStyle
+            ),
+        });
+    }, [templateColumns]);
+
+    useEffect(() => {
+        dispatch({
+            type: 'SET_GRID_LIST_STYLE',
+            payload: updateGridTemplateStyle(
+                templateColumnsList,
+                'gridTemplateColumns',
+                gridListStyle
+            ),
+        });
+    }, [templateColumnsList]);
+
+    const updateGridColumnTemplate = () => {
+        dispatch({
+            type: 'ADD_TEMPLATE_COLUMNS',
+            payload: templateColumns + 1,
+        });
+        dispatch({
+            type: 'SET_GRID_COLUMNS_ITEMS',
+            payload: updateGridTemplate(templateColumnsList),
+        });
+    };
+
+    const deleteGridColumn = (e) => {
+        dispatch({
+            type: 'ADD_TEMPLATE_COLUMNS',
+            payload: templateColumns - 1,
+        });
+        dispatch({
+            type: 'SET_GRID_COLUMNS_ITEMS',
+            payload: deleteGridTemplate(e, templateColumnsList),
+        });
+    };
+
+    const onColumnValueChange = (e) => {
+        dispatch({
+            type: 'SET_GRID_COLUMNS_ITEMS',
+            payload: onValueChange(e, templateColumnsList),
+        });
+    };
 
     const setAllColumnsItems = templateColumnsList.map((columnItem, index) => (
         <ListItem
@@ -55,4 +117,4 @@ function ControlRowItem() {
     );
 }
 
-export default ControlRowItem;
+export default ControlColumnItem;

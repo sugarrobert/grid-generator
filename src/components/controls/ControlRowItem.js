@@ -1,16 +1,78 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import GridContext from '../../context/GridContext';
 import ListItem from '../ListItem';
+import {
+    createNewTemplateItem,
+    updateGridTemplate,
+    deleteGridTemplate,
+    onValueChange,
+    updateGridTemplateStyle,
+} from '../../context/GridActions';
 
 function ControlRowItem() {
-    const {
-        templateRowsList,
-        updateGridRowTemplate,
-        gridListStyle,
-        onRowsValueChange,
-        deleteGridRow,
-    } = useContext(GridContext);
+    const { templateRows, templateRowsList, gridListStyle, dispatch } =
+        useContext(GridContext);
+
+    useEffect(() => {
+        const newArray = [];
+        if (templateRowsList.length === 0) {
+            for (let i = 0; i < templateRows; i++) {
+                const newItem = createNewTemplateItem();
+                newArray.push(newItem);
+            }
+            dispatch({ type: 'SET_GRID_ROWS_ITEMS', payload: newArray });
+        }
+
+        dispatch({
+            type: 'SET_GRID_LIST_STYLE',
+            payload: updateGridTemplateStyle(
+                templateRowsList,
+                'gridTemplateRows',
+                gridListStyle
+            ),
+        });
+    }, [templateRows]);
+
+    useEffect(() => {
+        dispatch({
+            type: 'SET_GRID_LIST_STYLE',
+            payload: updateGridTemplateStyle(
+                templateRowsList,
+                'gridTemplateRows',
+                gridListStyle
+            ),
+        });
+    }, [templateRowsList]);
+
+    const updateGridRowTemplate = () => {
+        dispatch({
+            type: 'ADD_TEMPLATE_ROWS',
+            payload: templateRows + 1,
+        });
+        dispatch({
+            type: 'SET_GRID_ROWS_ITEMS',
+            payload: updateGridTemplate(templateRowsList),
+        });
+    };
+
+    const deleteGridRow = (e) => {
+        dispatch({
+            type: 'ADD_TEMPLATE_ROWS',
+            payload: templateRows - 1,
+        });
+        dispatch({
+            type: 'SET_GRID_ROWS_ITEMS',
+            payload: deleteGridTemplate(e, templateRowsList),
+        });
+    };
+
+    const onRowsValueChange = (e) => {
+        dispatch({
+            type: 'SET_GRID_ROWS_ITEMS',
+            payload: onValueChange(e, templateRowsList),
+        });
+    };
 
     const setAllRowsItems = templateRowsList.map((rowItem, index) => (
         <ListItem

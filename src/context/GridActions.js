@@ -19,17 +19,24 @@ export const createNewTemplateItem = () => {
     };
 };
 
-export const updateGridTemplate = (setTemplateNum, setTemplateList) => {
-    setTemplateNum((currentTemplateNum) => {
-        return currentTemplateNum + 1;
-    });
-
+export const updateGridTemplate = (templateList) => {
     const newItem = createNewTemplateItem();
+    templateList.push(newItem);
 
-    setTemplateList((prevList) => [...prevList, newItem]);
+    return templateList;
 };
 
-export const onValueChange = (e, templateList, setTemplateList) => {
+export const deleteGridTemplate = (e, templateList) => {
+    const btnId = e.target.dataset.id;
+
+    const newList = templateList.filter((listItem) => {
+        return listItem.id !== btnId;
+    });
+
+    return newList;
+};
+
+export const onValueChange = (e, templateList) => {
     const parent = e.target.parentElement.id;
     const elementName = e.target.nodeName;
     const { value } = e.target;
@@ -48,32 +55,36 @@ export const onValueChange = (e, templateList, setTemplateList) => {
         return listItem;
     });
 
-    setTemplateList(updateValue);
+    return updateValue;
 };
 
-export const onGutterValueChange = (e, setGridGutter) => {
+export const onGutterValueChange = (e, gridGutter) => {
     const elementName = e.target.nodeName;
     const { value } = e.target;
 
     if (elementName === 'INPUT') {
-        setGridGutter((prevGutter) => {
-            const newInput = { ...prevGutter };
-            newInput.input.value = value;
-            return newInput;
-        });
+        const newInput = { ...gridGutter };
+        newInput.input.value = value;
+        return newInput;
     } else if (elementName === 'SELECT') {
-        setGridGutter((prevGutter) => {
-            const newSelected = { ...prevGutter };
-            newSelected.options.selected = value;
-            return newSelected;
-        });
+        const newSelected = { ...gridGutter };
+        newSelected.options.selected = value;
+        return newSelected;
     }
+};
+
+export const onAlignmentValueChange = (e, gridAlignment) => {
+    const { value } = e.target;
+
+    const newSelected = { ...gridAlignment };
+    newSelected.options.selected = value;
+    return newSelected;
 };
 
 export const updateGridTemplateStyle = (
     templateList,
     updateStyle,
-    setNewStyle
+    gridListStyle
 ) => {
     const templateStyle = templateList.map((style) => {
         const input = style.input.value;
@@ -89,69 +100,35 @@ export const updateGridTemplateStyle = (
         return newValue;
     });
 
-    const newStyle = templateStyle.join(' ');
+    const newValue = templateStyle.join(' ');
 
-    setNewStyle((prevStyle) => ({
-        ...prevStyle,
-        [updateStyle]: newStyle,
-    }));
-};
-
-export const updateGridAlignment = (
-    templateAlignment,
-    updateStyle,
-    setNewStyle
-) => {
-    const option = templateAlignment.options.selected;
-
-    setNewStyle((prevAlignment) => {
-        const newAlignment = { ...prevAlignment };
-        newAlignment[updateStyle] = option;
-        return newAlignment;
-    });
-};
-
-export const onAlignmentValueChange = (e, setGridAlignment) => {
-    const { value } = e.target;
-
-    setGridAlignment((prevAlignment) => {
-        const newSelected = { ...prevAlignment };
-        newSelected.options.selected = value;
-        return newSelected;
-    });
+    const newStyle = { ...gridListStyle };
+    newStyle[updateStyle] = newValue;
+    return newStyle;
 };
 
 export const updateGridGuttersStyle = (
     templateGutter,
     updateStyle,
-    setNewStyle
+    gridListStyle
 ) => {
     const input = templateGutter.input.value;
     const option = templateGutter.options.selected;
     const newValue = input + option;
 
-    setNewStyle((prevGutter) => {
-        const newGutter = { ...prevGutter };
-        newGutter[updateStyle] = newValue;
-        return newGutter;
-    });
+    const newStyle = { ...gridListStyle };
+    newStyle[updateStyle] = newValue;
+    return newStyle;
 };
 
-export const deleteGridTemplate = (
-    e,
-    setTemplateNum,
-    templateList,
-    setTemplateList
+export const updateGridAlignment = (
+    templateAlignment,
+    updateStyle,
+    gridListStyle
 ) => {
-    const btnId = e.target.dataset.id;
+    const option = templateAlignment.options.selected;
 
-    setTemplateNum((currentTemplateNum) => {
-        return currentTemplateNum - 1;
-    });
-
-    const newColumnList = templateList.filter((listItem) => {
-        return listItem.id !== btnId;
-    });
-
-    setTemplateList(newColumnList);
+    const newStyle = { ...gridListStyle };
+    newStyle[updateStyle] = option;
+    return newStyle;
 };

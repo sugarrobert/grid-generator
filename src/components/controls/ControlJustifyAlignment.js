@@ -1,10 +1,32 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import GridContext from '../../context/GridContext';
 import GridAlignment from '../GridAlignment';
+import {
+    updateGridAlignment,
+    onAlignmentValueChange,
+} from '../../context/GridActions';
 
 function ControlJustifyAlignment() {
-    const { gridJustify, setNewJustifyAlignment } = useContext(GridContext);
+    const { gridJustify, gridListStyle, dispatch } = useContext(GridContext);
+
+    useEffect(() => {
+        dispatch({
+            type: 'SET_GRID_LIST_STYLE',
+            payload: updateGridAlignment(
+                gridJustify,
+                'justifyItems',
+                gridListStyle
+            ),
+        });
+    }, [gridJustify]);
+
+    const setNewJustifyAlignment = (e) => {
+        dispatch({
+            type: 'SET_GRID_JUSTIFY_ALIGNMENT',
+            payload: onAlignmentValueChange(e, gridJustify),
+        });
+    };
 
     return (
         <section className="control-field__section">

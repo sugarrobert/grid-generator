@@ -1,10 +1,32 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import GridContext from '../../context/GridContext';
 import GridAlignment from '../GridAlignment';
+import {
+    updateGridAlignment,
+    onAlignmentValueChange,
+} from '../../context/GridActions';
 
 function ControlVerticallyAlignment() {
-    const { gridAlign, setNewAlignAlignment } = useContext(GridContext);
+    const { gridAlign, gridListStyle, dispatch } = useContext(GridContext);
+
+    useEffect(() => {
+        dispatch({
+            type: 'SET_GRID_LIST_STYLE',
+            payload: updateGridAlignment(
+                gridAlign,
+                'alignItems',
+                gridListStyle
+            ),
+        });
+    }, [gridAlign]);
+
+    const setNewAlignAlignment = (e) => {
+        dispatch({
+            type: 'SET_GRID_VERTICALLY_ALIGNMENT',
+            payload: onAlignmentValueChange(e, gridAlign),
+        });
+    };
 
     return (
         <section className="control-field__section">
