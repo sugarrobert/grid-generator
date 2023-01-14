@@ -1,6 +1,6 @@
-@use "variables";
-@use "mixins";
-@use "buttons";
+@use 'variables';
+@use 'mixins';
+@use 'buttons';
 
 body {
     margin: 0;
@@ -23,10 +23,16 @@ main {
 }
 
 .result__preview__container {
+    display: flex;
+    flex-direction: column;
+    gap: mixins.toRem(20);
+    padding: mixins.toRem(10);
+
     @media (min-width: 1024px) {
-        display: grid;
-        align-items: center;
         grid-column: 2 / 3;
+        position: sticky;
+        top: 0;
+        height: fit-content;
     }
 }
 
@@ -74,14 +80,27 @@ main {
 
 .grid__list {
     display: grid;
-    padding: mixins.toRem(10);
 }
 
 .grid__item {
-    @include mixins.flex(row, center,  center, nowrap);
+    @include mixins.flex(row, center, center, nowrap);
     background: #3273dc;
     color: #fff;
     padding: mixins.toRem(20);
     font-size: mixins.toRem(21);
     border-radius: mixins.toRem(5);
+}
+
+.result-code {
+    position: relative;
+}
+
+.copy-code {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: mixins.toRem(14);
+    padding: mixins.toRem(5);
+    background-color: #828282;
+    border-radius: 5px;
 }
