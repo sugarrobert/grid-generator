@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext, useEffect } from 'react';
 import GridContext from '../../context/GridContext';
 import ListItem from '../ListItem';
+import { FaPlus } from 'react-icons/fa';
 import {
     createNewTemplateItem,
     updateGridTemplate,
@@ -89,7 +90,7 @@ function ControlRowItem() {
     ));
 
     return (
-        <section className="control-field__section">
+        <section className="control-field__section gird__row-template">
             <h2 className="control-field__title">Grid Template Rows</h2>
             <p className="control-field__description">
                 grid-template-rows defines how the elements will be divided into{' '}
@@ -99,10 +100,12 @@ function ControlRowItem() {
             <div className="controls__list__container">
                 {setAllRowsItems}
                 <button
-                    className="action primary"
+                    className="action primary add-template"
                     onClick={updateGridRowTemplate}
                 >
-                    <span>+ Add another row</span>
+                    <span>
+                        <FaPlus className="icon" /> Add another row
+                    </span>
                 </button>
             </div>
             <div className="control-field__current-value">

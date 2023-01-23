@@ -35,7 +35,7 @@ function ControlVerticallyAlignment() {
                 Defines how the items will be aligned{' '}
                 <strong>vertically</strong> in each column.
             </p>
-            <div className="controls__container">
+            <div className="controls__container alignment__controls">
                 <GridAlignment
                     key={gridAlign.id}
                     id={gridAlign.id}

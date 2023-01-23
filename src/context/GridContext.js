@@ -65,8 +65,6 @@ export const GridTemplateProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(gridReducer, initialState);
 
-    console.log(state);
-
     return (
         <GridContext.Provider
             value={{

@@ -35,7 +35,7 @@ function ControlColumnGap() {
                 Defines the horizontal space <strong>between</strong> all
                 columns.
             </p>
-            <div className="controls__container">
+            <div className="controls__container gutter__controls">
                 <GridGutters
                     key={gridColumnGap.id}
                     id={gridColumnGap.id}

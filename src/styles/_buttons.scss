@@ -1,39 +1,55 @@
-@use "variables";
-@use "mixins";
+@use 'variables';
+@use 'mixins';
 
 .action {
+    @include mixins.flex(row, center, center, nowrap);
     font: inherit;
     padding: 0;
     cursor: pointer;
     color: inherit;
     border: none;
     background-color: transparent;
+    padding: mixins.toRem(10);
 
     &.primary {
-        padding: mixins.toRem(5) mixins.toRem(10);
+        @include mixins.ui-default-transition(background-color);
         font-size: mixins.toRem(16);
         line-height: mixins.toRem(19);
-        color: variables.$white;
-        background-color: variables.$theme-color__primary-10;
+        color: variables.$color__button-primary;
+        background-color: variables.$color__button-primary-bg;
         font-weight: 600;
+
+        &:hover,
+        &:focus {
+            background-color: variables.$color__button-primary-bg-hover;
+        }
+    }
+
+    &.add,
+    &.remove {
+        font-size: mixins.toRem(18);
+        line-height: mixins.toRem(19);
+        color: variables.$white;
+        font-weight: 600;
+
+        &:hover,
+        &:focus {
+            & svg {
+                scale: 1.2;
+            }
+        }
     }
 
     &.add {
-        padding: mixins.toRem(5) mixins.toRem(10);
-        font-size: mixins.toRem(16);
-        line-height: mixins.toRem(19);
-        color: variables.$white;
         background-color: variables.$green;
-        font-weight: 600;
     }
 
     &.remove {
-        padding: mixins.toRem(5) mixins.toRem(10);
-        font-size: mixins.toRem(16);
-        line-height: mixins.toRem(19);
-        color: variables.$white;
         background-color: variables.$red;
-        font-weight: 600;
+    }
+
+    & svg {
+        @include mixins.ui-default-transition(scale);
+        pointer-events: none;
     }
 }
-

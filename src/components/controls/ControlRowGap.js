@@ -34,7 +34,7 @@ function ControlRowGap() {
             <p className="control-field__description">
                 Defines the horizontal space <strong>between</strong> all rows.
             </p>
-            <div className="controls__container">
+            <div className="controls__container gutter__controls">
                 <GridGutters
                     key={gridRowGap.id}
                     id={gridRowGap.id}

@@ -1,7 +1,6 @@
 import React from 'react';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import GridContext from '../context/GridContext';
-import { updateGridTemplateStyle } from '../context/GridActions';
 
 function GridResultCode() {
     const { gridListStyle } = useContext(GridContext);
@@ -17,15 +16,15 @@ function GridResultCode() {
     };
 
     const code = `
-        .container {
-            display: grid;
-            grid-template-columns: ${gridListStyle.gridTemplateColumns};
-            grid-template-rows: ${gridListStyle.gridTemplateRows};
-            grid-column-gap: ${gridListStyle.gridColumnGap};
-            grid-row-gap: ${gridListStyle.gridRowGap};
-            justify-items: ${gridListStyle.justifyItems};
-            align-items: ${gridListStyle.alignItems};
-        }
+    .container {
+        display: grid;
+        grid-template-columns: ${gridListStyle.gridTemplateColumns};
+        grid-template-rows: ${gridListStyle.gridTemplateRows};
+        grid-column-gap: ${gridListStyle.gridColumnGap};
+        grid-row-gap: ${gridListStyle.gridRowGap};
+        justify-items: ${gridListStyle.justifyItems};
+        align-items: ${gridListStyle.alignItems};
+    }
     `;
 
     return (

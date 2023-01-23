@@ -1,14 +1,14 @@
-@use "variables";
+@use 'variables';
 
 @mixin clearfix {
     &::after {
         display: block;
         clear: both;
-        content: "";
+        content: '';
     }
 }
 
-@mixin position ($position, $top, $right, $bottom, $left) {
+@mixin position($position, $top, $right, $bottom, $left) {
     position: $position;
     top: $top;
     right: $right;
@@ -16,11 +16,11 @@
     left: $left;
 }
 
-@mixin absolute ($top, $right, $bottom, $left) {
+@mixin absolute($top, $right, $bottom, $left) {
     @include position(absolute, $top, $right, $bottom, $left);
 }
 
-@mixin fixed ($top, $right, $bottom, $left) {
+@mixin fixed($top, $right, $bottom, $left) {
     @include position(fixed, $top, $right, $bottom, $left);
 }
 
@@ -34,8 +34,13 @@
     width: 100%;
 }
 
-@mixin ui-default-transition ($proptype) {
-    transition: $proptype 460ms cubic-bezier(.7, 0, .3, 1);
+@mixin ui-default-transition($proptype) {
+    transition: $proptype 460ms cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+@mixin icon-font-display($content) {
+    font-family: 'Font Awesome';
+    content: $content;
 }
 
 @mixin no-display {
@@ -60,7 +65,7 @@
     text-transform: uppercase;
 }
 
-@mixin truncate ($width) {
+@mixin truncate($width) {
     width: $width;
     white-space: nowrap;
     overflow: hidden;
@@ -79,7 +84,7 @@
     }
 }
 
-@mixin flex ($direction, $vcenter, $hcenter, $wrap) {
+@mixin flex($direction, $vcenter, $hcenter, $wrap) {
     display: flex;
     flex-direction: $direction;
     align-items: $vcenter;
@@ -87,9 +92,9 @@
     flex-wrap: $wrap;
 }
 
-@mixin aspect-ratio-calc ($height, $width) {
+@mixin aspect-ratio-calc($height, $width) {
     &::before {
-        content: "";
+        content: '';
         width: 1px;
         margin-left: -1px;
         float: left;
@@ -98,22 +103,24 @@
     }
 
     &::after {
-        content: "";
+        content: '';
         display: table;
         clear: both;
     }
 }
 
-@mixin placeholder ($color) {
+@mixin placeholder($color) {
     ::-webkit-input-placeholder {
         color: $color;
     }
 
-    :-moz-placeholder { /* Firefox 18- */
+    :-moz-placeholder {
+        /* Firefox 18- */
         color: $color;
     }
 
-    ::-moz-placeholder { /* Firefox 19+ */
+    ::-moz-placeholder {
+        /* Firefox 19+ */
         color: $color;
     }
 
@@ -137,8 +144,7 @@
     color: variables.$color__text;
 }
 
-
 @function toRem($value) {
-    $remValue: calc($value / variables.$base-font-size) + rem; 
+    $remValue: calc($value / variables.$base-font-size) + rem;
     @return $remValue;
 }

@@ -1,0 +1,27 @@
+@use 'mixins';
+
+input {
+    padding: mixins.toRem(5) mixins.toRem(10);
+    min-width: 0;
+}
+
+select {
+    padding: mixins.toRem(5) mixins.toRem(20) mixins.toRem(5) mixins.toRem(10);
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url('../images/icons/chevron-down-solid.svg');
+    background-size: mixins.toRem(12);
+    background-position: calc(100% - mixins.toRem(10)) center;
+    background-repeat: no-repeat;
+
+    &:hover {
+        &:focus {
+            background-image: url('../images/icons/chevron-up-solid.svg');
+        }
+    }
+
+    &::-ms-expand {
+        display: none;
+    }
+}

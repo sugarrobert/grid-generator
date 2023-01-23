@@ -13,10 +13,10 @@ import { GridTemplateProvider } from './context/GridContext';
 function App() {
     return (
         <>
-            <header>
+            <header className="container">
                 <h1>Grid Generator</h1>
             </header>
-            <main>
+            <main className="container">
                 <GridTemplateProvider>
                     <div className="control-field__container">
                         <ControlGridItem />

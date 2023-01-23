@@ -1,5 +1,6 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
+import { FaPlus } from 'react-icons/fa';
 
 function ListItem(props) {
     return (
@@ -48,7 +49,7 @@ function ListItem(props) {
                 data-id={props.id}
                 onClick={props.deleteGridTemplate}
             >
-                x
+                <FaPlus className="icon close" />
             </button>
         </div>
     );
