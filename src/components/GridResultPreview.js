@@ -1,18 +1,27 @@
 import React from 'react';
 import { useContext, useEffect } from 'react';
 import GridContext from '../context/GridContext';
-import { nanoid } from 'nanoid';
+import GridItem from './GridItem';
 
-function GridItem() {
+function GridResultPreview() {
     const { gridList, gridItems, gridListStyle, dispatch } =
         useContext(GridContext);
 
     useEffect(() => {
         const newArray = [];
         for (let i = 0; i < gridItems; i++) {
+            let itemNum = `grid__item--${i + 1}`;
             const item = {
-                id: nanoid(),
-                class: 'grid__item',
+                id: itemNum,
+                class: `grid__item ${itemNum}`,
+                columnStart: {
+                    id: `column__${itemNum}`,
+                    value: 1,
+                },
+                rowStart: {
+                    id: `row__${itemNum}`,
+                    value: 1,
+                },
             };
 
             newArray.push(item);
@@ -21,9 +30,14 @@ function GridItem() {
     }, [gridItems]);
 
     const setAllGridItems = gridList.map((gridItem, index) => (
-        <li key={gridItem.id} id={gridItem.id} className={gridItem.class}>
-            {index + 1}
-        </li>
+        <GridItem
+            key={gridItem.id}
+            id={gridItem.id}
+            class={gridItem.class}
+            index={index}
+            columnStart={gridItem.columnStart}
+            rowStart={gridItem.rowStart}
+        />
     ));
 
     return (
@@ -35,4 +49,4 @@ function GridItem() {
     );
 }
 
-export default GridItem;
+export default GridResultPreview;

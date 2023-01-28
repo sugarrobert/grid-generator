@@ -26,7 +26,8 @@
     }
 
     &.add,
-    &.remove {
+    &.remove,
+    &.settings {
         font-size: mixins.toRem(18);
         line-height: mixins.toRem(19);
         color: variables.$white;
@@ -38,6 +39,11 @@
                 scale: 1.2;
             }
         }
+
+        & svg {
+            @include mixins.ui-default-transition(scale);
+            pointer-events: none;
+        }
     }
 
     &.add {
@@ -48,8 +54,14 @@
         background-color: variables.$red;
     }
 
-    & svg {
-        @include mixins.ui-default-transition(scale);
-        pointer-events: none;
+    &.settings {
+        position: absolute;
+        top: mixins.toRem(10);
+        right: mixins.toRem(10);
+        padding: 0;
+
+        &.remove {
+            background-color: transparent;
+        }
     }
 }

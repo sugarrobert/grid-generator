@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import GridContext from '../context/GridContext';
 
 function GridResultCode() {
-    const { gridListStyle } = useContext(GridContext);
+    const { gridListStyle, gridList } = useContext(GridContext);
 
     const copyCode = async () => {
         const text = document.querySelector('.code__lang').innerHTML;
@@ -15,7 +15,26 @@ function GridResultCode() {
         }
     };
 
-    const code = `
+    const createNewItemStyle = (itemClass, columnVal, rowVal) => {
+        return `
+    .${itemClass} {
+        ${columnVal > 1 ? `grid-column-start: span ${columnVal};` : ''}
+        ${rowVal > 1 ? `grid-row-start: span ${rowVal};` : ''}
+    }
+    `;
+    };
+
+    const setItemsStyle = gridList.map((item) => {
+        const itemClass = item.id;
+        const columnSpan = item.columnStart.value;
+        const rowSpan = item.rowStart.value;
+
+        if (columnSpan > 1 || rowSpan > 1) {
+            return createNewItemStyle(itemClass, columnSpan, rowSpan);
+        }
+    });
+
+    const gridCode = `
     .container {
         display: grid;
         grid-template-columns: ${gridListStyle.gridTemplateColumns};
@@ -30,7 +49,10 @@ function GridResultCode() {
     return (
         <section className="result-code">
             <pre>
-                <code className="code__lang">{code}</code>
+                <code className="code__lang">
+                    {gridCode}
+                    {setItemsStyle}
+                </code>
             </pre>
             <button className="action copy-code" onClick={copyCode}>
                 Copy Code

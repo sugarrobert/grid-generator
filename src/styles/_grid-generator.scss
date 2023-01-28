@@ -112,6 +112,7 @@ main {
 .grid__item {
     @include mixins.flex(row, center, center, nowrap);
     background: variables.$theme-color__primary;
+    position: relative;
     color: #fff;
     padding: mixins.toRem(20);
     font-size: mixins.toRem(21);
@@ -154,4 +155,51 @@ main {
     & svg {
         font-size: mixins.toRem(12);
     }
+}
+
+.item-stretch__options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: mixins.toRem(5);
+    padding: mixins.toRem(10);
+    background-color: variables.$white;
+    width: mixins.toRem(200);
+    right: mixins.toRem(2);
+    top: mixins.toRem(45);
+    z-index: 1;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 5px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: mixins.toRem(6);
+        top: mixins.toRem(-10);
+        width: 0;
+        height: 0;
+        border-color: #414141 transparent transparent;
+        border-left: 10px solid transparent;
+        border-bottom: 10px solid variables.$white;
+        border-right: 10px solid transparent;
+        border-top: 0 solid transparent;
+    }
+
+    & input {
+        font-size: mixins.toRem(16);
+        width: 100%;
+        height: auto;
+    }
+
+    & label {
+        font-size: mixins.toRem(12);
+        color: var(--text);
+    }
+}
+
+.grid-item__span__input--container {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 2fr 1fr;
+    gap: mixins.toRem(5);
 }
