@@ -19,6 +19,23 @@ export const createNewTemplateItem = () => {
     };
 };
 
+export const createGridPreviewItem = (i) => {
+    let itemNum = `grid__item--${i + 1}`;
+    const item = {
+        id: itemNum,
+        class: `grid__item ${itemNum}`,
+        columnStart: {
+            id: `column__${itemNum}`,
+            value: 1,
+        },
+        rowStart: {
+            id: `row__${itemNum}`,
+            value: 1,
+        },
+    };
+    return item;
+};
+
 export const updateGridTemplate = (templateList) => {
     const newItem = createNewTemplateItem();
     templateList.push(newItem);

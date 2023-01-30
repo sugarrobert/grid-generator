@@ -2,16 +2,37 @@ import React from 'react';
 import { useContext } from 'react';
 import GridContext from '../../context/GridContext';
 import { FaMinus, FaPlus } from 'react-icons/fa';
+import { createGridPreviewItem } from '../../context/GridActions';
 
 function ControlGridItem() {
-    const { gridItems, dispatch } = useContext(GridContext);
+    const { gridItems, gridList, dispatch } = useContext(GridContext);
+
+    const addNewGridPreviewItem = () => {
+        gridList.push(createGridPreviewItem(gridList.length));
+
+        return gridList;
+    };
+
+    const removeGridPreviewItem = () => {
+        gridList.pop();
+
+        return gridList;
+    };
 
     const addElement = () => {
         dispatch({ type: 'SET_GRID_ITEMS', payload: gridItems + 1 });
+        dispatch({
+            type: 'SET_GRID_LIST',
+            payload: addNewGridPreviewItem(),
+        });
     };
 
     const removeElement = () => {
         dispatch({ type: 'SET_GRID_ITEMS', payload: gridItems - 1 });
+        dispatch({
+            type: 'SET_GRID_LIST',
+            payload: removeGridPreviewItem(),
+        });
     };
 
     return (
