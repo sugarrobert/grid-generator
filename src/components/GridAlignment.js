@@ -11,7 +11,7 @@ function GridAlignment(props) {
             <select
                 id={props.options.id}
                 className="column__value"
-                aria-label="{`Grid Template ${props.name} unit`}"
+                aria-label={`Grid Template ${props.name} unit`}
                 value={props.options.selected}
                 onChange={props.onValueChange}
             >

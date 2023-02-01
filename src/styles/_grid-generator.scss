@@ -20,6 +20,8 @@ main {
     grid-column: 1 / 2;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: mixins.toRem(20);
+    margin-bottom: mixins.toRem(20);
 }
 
 .grid__add-rem,
@@ -46,8 +48,12 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: mixins.toRem(20);
+    padding-bottom: mixins.toRem(20);
     border-bottom: 1px solid variables.$grey-50;
+
+    @media (min-width: 768px) {
+        padding: mixins.toRem(20);
+    }
 }
 
 .control-field__title {

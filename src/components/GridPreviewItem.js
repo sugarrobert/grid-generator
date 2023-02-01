@@ -22,6 +22,7 @@ function GridPreviewItem(props) {
 
             <button
                 className="action icon settings"
+                title="Grid item options"
                 onClick={() => {
                     setShown(true);
                 }}

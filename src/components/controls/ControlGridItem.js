@@ -41,10 +41,18 @@ function ControlGridItem() {
                 Add or Remove elements within the grid
             </h2>
             <div className="controls__container">
-                <button className="action add" onClick={addElement}>
+                <button
+                    className="action add"
+                    onClick={addElement}
+                    title="Add grid item"
+                >
                     <FaPlus className="icon" />
                 </button>
-                <button className="action remove" onClick={removeElement}>
+                <button
+                    className="action remove"
+                    onClick={removeElement}
+                    title="Remove grid item"
+                >
                     <FaMinus />
                 </button>
             </div>

@@ -14,7 +14,7 @@ function GridGutters(props) {
                 type="number"
                 min="1"
                 value={props.input.value}
-                aria-label="{`Grid Template ${props.name} amount`}"
+                aria-label={`Grid Template ${props.name} amount`}
                 className="input column__value"
                 onChange={props.onValueChange}
             />
@@ -25,7 +25,7 @@ function GridGutters(props) {
             <select
                 id={props.options.id}
                 className="column__value"
-                aria-label="{`Grid Template ${props.name} unit`}"
+                aria-label={`Grid Template ${props.name} unit`}
                 value={props.options.selected}
                 onChange={props.onValueChange}
             >

@@ -18,7 +18,7 @@ function ListItem(props) {
                 type="number"
                 min="1"
                 value={props.input.value}
-                aria-label="{`Grid Template ${props.name} amount`}"
+                aria-label={`Grid Template ${props.name} amount`}
                 className="input column__value"
                 disabled={
                     props.input.dataId === props.options.dataId &&
@@ -33,7 +33,7 @@ function ListItem(props) {
             <select
                 id={props.options.id}
                 className="column__value"
-                aria-label="{`Grid Template ${props.name} unit`}"
+                aria-label={`Grid Template ${props.name} unit`}
                 value={props.options.selected}
                 onChange={props.onValueChange}
             >
@@ -45,6 +45,7 @@ function ListItem(props) {
             </select>
             <button
                 aria-label="Delete property"
+                title={`Remove ${props.name} Template`}
                 className="action remove"
                 data-id={props.id}
                 onClick={props.deleteGridTemplate}
