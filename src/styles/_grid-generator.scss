@@ -43,6 +43,9 @@ main {
 }
 
 .control-field__section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: mixins.toRem(20);
     border-bottom: 1px solid variables.$grey-50;
 }
@@ -57,7 +60,6 @@ main {
     font-size: mixins.toRem(14);
     line-height: mixins.toRem(21);
     margin-bottom: mixins.toRem(20);
-    min-height: mixins.toRem(63);
 }
 
 .controls__container {
@@ -90,13 +92,25 @@ main {
 
 .controls__list__item {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 0.5fr;
     align-items: center;
-    gap: 10px;
+    grid-template-columns: 1.5fr 1fr 1fr 0.5fr;
+    gap: mixins.toRem(10);
+
+    @media (min-width: 1024px) {
+        grid-template-columns: 1fr 2fr 1fr 0.5fr;
+    }
+
+    & input {
+        @media (max-width: 1024px) {
+            text-align: center;
+        }
+    }
 }
 
 .column__value {
     height: 100%;
+    background-color: white;
+    border-width: 1px;
 }
 
 .control-field__current-value__label {
@@ -111,9 +125,9 @@ main {
 
 .grid__item {
     @include mixins.flex(row, center, center, nowrap);
-    background: variables.$theme-color__primary;
     position: relative;
-    color: #fff;
+    background: variables.$theme-color__primary;
+    color: variables.$white;
     padding: mixins.toRem(20);
     font-size: mixins.toRem(21);
     border-radius: mixins.toRem(5);
@@ -122,8 +136,13 @@ main {
 .result-code {
     position: relative;
     padding: mixins.toRem(10);
-    background-color: #ebe9db;
+    background-color: variables.$code-color__background-color;
+    color: variables.$code-color__color;
     border-radius: 5px;
+}
+
+.code__lang {
+    white-space: pre-wrap;
 }
 
 .copy-code {
@@ -164,12 +183,16 @@ main {
     gap: mixins.toRem(5);
     padding: mixins.toRem(10);
     background-color: variables.$white;
-    width: mixins.toRem(200);
+    width: mixins.toRem(115);
     right: mixins.toRem(2);
     top: mixins.toRem(45);
     z-index: 1;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 5px;
+
+    @media (min-width: 768px) {
+        width: mixins.toRem(200);
+    }
 
     &::after {
         content: '';
@@ -189,6 +212,10 @@ main {
         font-size: mixins.toRem(16);
         width: 100%;
         height: auto;
+
+        @media (max-width: 1024px) {
+            text-align: center;
+        }
     }
 
     & label {
@@ -199,7 +226,10 @@ main {
 
 .grid-item__span__input--container {
     display: grid;
-    align-items: center;
-    grid-template-columns: 2fr 1fr;
     gap: mixins.toRem(5);
+
+    @media (min-width: 768px) {
+        align-items: center;
+        grid-template-columns: 2fr 1fr;
+    }
 }

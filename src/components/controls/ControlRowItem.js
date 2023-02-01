@@ -103,9 +103,10 @@ function ControlRowItem() {
                     className="action primary add-template"
                     onClick={updateGridRowTemplate}
                 >
-                    <span>
-                        <FaPlus className="icon" /> Add another row
-                    </span>
+                    Add another row
+                    <i className="icon">
+                        <FaPlus className="icon" />
+                    </i>
                 </button>
             </div>
             <div className="control-field__current-value">

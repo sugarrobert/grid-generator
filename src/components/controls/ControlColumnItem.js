@@ -103,9 +103,10 @@ function ControlColumnItem() {
                     className="action primary add-template"
                     onClick={updateGridColumnTemplate}
                 >
-                    <span>
-                        <FaPlus className="icon" /> Add another column
-                    </span>
+                    Add another column
+                    <i className="icon">
+                        <FaPlus className="icon" />
+                    </i>
                 </button>
             </div>
             <div className="control-field__current-value">

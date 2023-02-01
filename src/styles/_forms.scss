@@ -12,8 +12,12 @@ select {
     appearance: none;
     background-image: url('../images/icons/chevron-down-solid.svg');
     background-size: mixins.toRem(12);
-    background-position: calc(100% - mixins.toRem(10)) center;
+    background-position: calc(100% - mixins.toRem(5)) center;
     background-repeat: no-repeat;
+
+    @media (min-width: 1024px) {
+        background-position: calc(100% - mixins.toRem(10)) center;
+    }
 
     &:hover {
         &:focus {

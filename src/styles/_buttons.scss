@@ -13,6 +13,8 @@
 
     &.primary {
         @include mixins.ui-default-transition(background-color);
+        position: relative;
+        overflow: hidden;
         font-size: mixins.toRem(16);
         line-height: mixins.toRem(19);
         color: variables.$color__button-primary;
@@ -21,7 +23,28 @@
 
         &:hover,
         &:focus {
-            background-color: variables.$color__button-primary-bg-hover;
+            & .icon {
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        & .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: 0;
+            width: mixins.toRem(40);
+            height: 100%;
+            transform: translate3d(100%, 0, 0);
+            transform-origin: right center;
+            transition: all 0.46s cubic-bezier(0.7, 0, 0.3, 1);
+            background-color: variables.$theme-color__secondary-monochromatic;
+
+            & svg {
+                height: mixins.toRem(18);
+                color: variables.$white;
+            }
         }
     }
 
@@ -59,9 +82,5 @@
         top: mixins.toRem(10);
         right: mixins.toRem(10);
         padding: 0;
-
-        &.remove {
-            background-color: transparent;
-        }
     }
 }

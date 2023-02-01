@@ -11,7 +11,7 @@ export const GridTemplateProvider = ({ children }) => {
         gridList: [],
         templateColumns: 3,
         templateColumnsList: [],
-        templateRows: 2,
+        templateRows: 3,
         templateRowsList: [],
         gridRowGap: {
             id: nanoid(),

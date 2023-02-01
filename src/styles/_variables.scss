@@ -17,12 +17,10 @@ $grey-50: hsl(0, 0%, 37%);
 $grey-70: hsl(0, 0%, 52%);
 $grey-90: hsl(0, 0%, 77%);
 
-$theme-color__primary: #7c9473; /* #7C9473 */
-$theme-color__primary-10: hsla(230, 34%, 46%, 1); /* #4D5B9E */
-$theme-color__primary-20: hsla(230, 61%, 90%, 1); /* #D6DBF5 */
+$theme-color__primary: #7c9473; /* #7c9473 */
 
-$theme-color__secondary: #4a3628; /* #4A3628 */
-$theme-color__secondary-10: #806240; /* #4A3628 */
+$theme-color__secondary: #5c7278; /* #5c7278 */
+$theme-color__secondary-monochromatic: #738d94; /* #738d94 */
 
 $theme-color__green: hsla(133, 46%, 71%, 1); /* #94D7A2 */
 $theme-color__red: hsla(360, 81%, 85%, 1); /* #F8BCBC */
@@ -31,10 +29,12 @@ $theme-color__blue: hsla(231, 42%, 28%, 1); /* #293264 */
 $theme-background-color__primary: #dadad4; /* #DADAD4 */
 $theme-background-color__secondary: hsla(0, 0%, 11%, 1); /* #1C1C1C */
 
+$code-color__color: #ff3860;
+$code-color__background-color: #ebe9db;
+
 /* Primary Button */
 $color__button-primary: $white;
 $color__button-primary-bg: $theme-color__secondary;
-$color__button-primary-bg-hover: $theme-color__secondary-10;
 
 $color__text: $theme-color__primary;
 $color__text-muted: $theme-color__blue;

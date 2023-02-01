@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext, useEffect, useRef } from 'react';
 import GridContext from '../context/GridContext';
-import GridItem from './GridItem';
+import GridPreviewItem from './GridPreviewItem';
 import { createGridPreviewItem } from '../context/GridActions';
 
 function GridResultPreview() {
@@ -31,7 +31,7 @@ function GridResultPreview() {
     };
 
     const setAllGridItems = gridList.map((gridItem, index) => (
-        <GridItem
+        <GridPreviewItem
             key={gridItem.id}
             id={gridItem.id}
             class={gridItem.class}
