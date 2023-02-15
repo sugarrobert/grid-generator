@@ -13,8 +13,8 @@ import { GridTemplateProvider } from './context/GridContext';
 function App() {
     return (
         <>
-            <header className="container">
-                <h1>Grid Generator</h1>
+            <header className="main-title">
+                <h1 className="container">Grid Genie</h1>
             </header>
             <main className="container">
                 <GridTemplateProvider>
